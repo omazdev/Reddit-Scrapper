@@ -34,8 +34,13 @@ class WebDevSpider(scrapy.Spider):
         post_item['comments'] = {}
         comment_index = 0
         
-        # TODO Get post text
+        # Get post content
+        post_item['post_content'] = response.css(
+            'div.thing.linkflair-showoff div.usertext-body p').getall()
+
+        # TODO Get post_content for other forms of post (video, external link, ...)
         
+        # Get comments
         for comment in response.css('div.thing.noncollapsed.comment'):
             post_item['comments'][comment_index] = dict(
                 comment_author=comment.css('a.author.may-blank::text').get(),
@@ -46,7 +51,7 @@ class WebDevSpider(scrapy.Spider):
                 comment_date=comment.css(
                     'time.live-timestamp::attr(title)').get(),
                 comment_text=comment.css('div.entry.unvoted')[0].css(
-                    'form.usertext > div.usertext-body p::text').getall(),
+                    'form.usertext > div.usertext-body p').getall(),
             )
 
             comment_index += 1
