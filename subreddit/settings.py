@@ -60,11 +60,26 @@ ROBOTSTXT_OBEY = False
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
 
+CONNECTION_STRING = 'sqlite:///scrapy_subreddit.db'
+
+# MySQL (PyMySQL)
+# CONNECTION_STRING = "{drivername}://{user}:{passwd}@{host}/{db_name}?charset=utf8".format(
+#      drivername="mysql+pymysql",
+#      user="",
+#      passwd="",
+#      host="localhost",
+#      db_name="scrapy_subreddit",
+# )
+
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'subreddit.pipelines.SubredditPipeline': 300,
+   'subreddit.pipelines.DuplicatesPipeline': 100,
+   'subreddit.pipelines.SavePostsCommentsPipeline': 200,
 }
+
+LOG_FILE="log.txt"
+LOG_ENABLED=True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
