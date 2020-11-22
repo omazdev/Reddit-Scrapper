@@ -1,13 +1,14 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from ..items import PostItem, CommentItem
-
+import demoji
 
 class WebDevSpider(scrapy.Spider):
     name = "webdev"
     start_urls = ['https://old.reddit.com/r/webdev/']
     pages_index = 1
     pages_to_scrape = 1
+    demoji.download_codes()
 
     def load_css(self, selector, loader, field_name, css, null_value):
         if selector.css(css):
@@ -57,7 +58,7 @@ class WebDevSpider(scrapy.Spider):
 
         # Get post content
         if response.css('div#siteTable > div.thing div.usertext-body p').get() is None:
-            post_loader.add_value('post_content', None)
+            post_loader.add_value('post_content', "NULL")
         else:
             post_loader.add_css(
                 'post_content', 'div#siteTable > div.thing div.usertext-body p')
@@ -84,7 +85,7 @@ class WebDevSpider(scrapy.Spider):
                 self.load_css(comment, comment_loader, 'comment_date',
                               'p.tagline > time.live-timestamp::attr(title)', None)
                 self.load_css(comment, comment_loader, 'comment_text',
-                              'form.usertext > div.usertext-body p', None)
+                              'form.usertext > div.usertext-body p', "NULL")
 
                 comment_item = comment_loader.load_item()
 

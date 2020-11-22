@@ -1,14 +1,12 @@
 from scrapy.item import Item, Field
 from itemloaders.processors import MapCompose, TakeFirst, Join
 from datetime import datetime
+import demoji
 
 
 def convert_date(text):
     # convert string Sun Nov 1 12:12:35 2020 UTC to Python date
-    if text == "NULL":
-        return None
-    else:
-        return datetime.strptime(text, '%a %b %d %H:%M:%S %Y %Z')
+    return datetime.strptime(text, '%a %b %d %H:%M:%S %Y %Z') if text != "NULL" else None
 
 
 def strip_comments_count(text):
@@ -16,17 +14,29 @@ def strip_comments_count(text):
     strip "comments and comment strings"
     """
     result = text.strip(" comments")
-    if result == "":
-        return "0"
-    else:
-        return result
+    return "0" if result == "" else result
 
+
+def replace_emojis(text):
+    """
+    replace emojis with corresponding name
+    """
+    return demoji.replace_with_desc(str(text), "||")
+
+
+def format_link(link):
+    """
+    Append site url 
+    """
+    return "https://old.reddit.com" + link if link[:3] == "/r/" else link
 
 class PostItem(Item):
     post_title = Field(
+        input_processor=MapCompose(replace_emojis),
         output_processor=TakeFirst(),
     )
     post_link = Field(
+        input_processor=MapCompose(format_link),
         output_processor=TakeFirst(),
     )
     post_author = Field(
@@ -53,6 +63,7 @@ class PostItem(Item):
         output_processor=TakeFirst(),
     )
     post_content = Field(
+        input_processor=MapCompose(replace_emojis),
         output_processor=Join(),
     )
     post_comments = Field()
@@ -73,5 +84,6 @@ class CommentItem(Item):
         output_processor=TakeFirst(),
     )
     comment_text = Field(
+        input_processor=MapCompose(replace_emojis),
         output_processor=Join(),
     )

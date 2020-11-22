@@ -24,7 +24,7 @@ class Post(Base):
     __tablename__ = "post"
 
     id = Column(Integer, primary_key=True)
-    title = Column('title', String(250))
+    title = Column('title', Text())
     link = Column('link', String(250))
     content = Column('content', Text())
     publish_date = Column('publish_date', DateTime)
