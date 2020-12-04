@@ -25,7 +25,7 @@ class Post(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column('title', Text())
-    link = Column('link', String(250))
+    link = Column('link', Text())
     content = Column('content', Text())
     publish_date = Column('publish_date', DateTime)
     votes_count = Column('votes_count', Integer())

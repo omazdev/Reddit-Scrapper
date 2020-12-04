@@ -19,6 +19,8 @@ NEWSPIDER_MODULE = 'subreddit.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# PROXY_POOL_ENABLED = True
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -50,9 +52,21 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'subreddit.middlewares.SubredditDownloaderMiddleware': 543,
-#}
+
+# DOWNLOADER_MIDDLEWARES = {
+#    'subreddit.middlewares.SubredditDownloaderMiddleware': None,
+#    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+# }
+
+# scrapy-user-agents: Set this to true to be able to use with proxies 
+# RANDOM_UA_PER_PROXY = True
+
+DOWNLOADER_MIDDLEWARES = {
+    'subreddit.middlewares.SubredditDownloaderMiddleware': None,
+    # 'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+    # 'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 800,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

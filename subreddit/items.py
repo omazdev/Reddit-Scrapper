@@ -5,8 +5,10 @@ import demoji
 
 
 def convert_date(text):
-    # convert string Sun Nov 1 12:12:35 2020 UTC to Python date
-    return datetime.strptime(text, '%a %b %d %H:%M:%S %Y %Z') if text != "NULL" else None
+    """
+    convert string Sun Nov 1 12:12:35 2020 UTC to Python date
+    """
+    return datetime.strptime(text, '%a %b %d %H:%M:%S %Y %Z') if text != "NULL" else datetime(1, 1, 1, 0, 0)
 
 
 def strip_comments_count(text):

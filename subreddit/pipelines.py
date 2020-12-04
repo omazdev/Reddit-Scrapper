@@ -31,9 +31,9 @@ class SavePostsCommentsPipeline(object):
         post.link = item["post_link"]
         post.content = item["post_content"]
         post.publish_date = item["post_date"]
-        post.votes_count = item["post_votes_nbr"]
+        post.votes_count = int(item["post_votes_nbr"])
         post.flair = item["post_flair"]
-        post.comments_count = item["post_comments_nbr"]
+        post.comments_count = int(item["post_comments_nbr"])
         post.comments_link = item["post_comments_link"]
 
         post_author.name = item["post_author"]
@@ -68,7 +68,7 @@ class SavePostsCommentsPipeline(object):
 
                 comment.content = post_comment["comment_text"]
                 comment.publish_date = post_comment["comment_date"]
-                comment.score = post_comment["comment_score"]
+                comment.score = int(post_comment["comment_score"])
                 comment.post = post
 
                 comment_author.name = post_comment["comment_author"]
