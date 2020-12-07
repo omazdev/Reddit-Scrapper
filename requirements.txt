@@ -1,4 +1,4 @@
-demoji==0.3.0s
+demoji==0.3.0
 PyMySQL==0.10.1
 Scrapy==2.4.0
 scrapy-proxy-pool==0.1.7
