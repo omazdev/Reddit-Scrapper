@@ -1,11 +1,3 @@
-# Scrapy settings for subreddit project
-#
-# For simplicity, this file contains only settings considered important or
-# commonly used. You can find more settings consulting the documentation:
-#
-#     https://docs.scrapy.org/en/latest/topics/settings.html
-#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'subreddit'
 
@@ -88,7 +80,7 @@ CONNECTION_STRING = 'sqlite:///scrapy_subreddit.db'
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'subreddit.pipelines.DuplicatesPipeline': 100,
+#    'subreddit.pipelines.DuplicatesPipeline': 100,
    'subreddit.pipelines.SavePostsCommentsPipeline': 200,
 }
 

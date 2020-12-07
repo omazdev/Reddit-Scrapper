@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
     Integer, String, Date, DateTime, Float, Boolean, Text)
+from sqlalchemy import UniqueConstraint
+
 from scrapy.utils.project import get_project_settings
 
 Base = declarative_base()
@@ -22,7 +24,11 @@ def create_table(engine):
 
 class Post(Base):
     __tablename__ = "post"
-
+    __table_args__ = (
+        # this can be db.PrimaryKeyConstraint if you want it to be a primary key
+        UniqueConstraint('publish_date', 'comments_link',
+                         name='_post_pub_link_uc'),
+    )
     id = Column(Integer, primary_key=True)
     title = Column('title', Text())
     link = Column('link', Text())
@@ -48,7 +54,11 @@ class Author(Base):
 
 class Comment(Base):
     __tablename__ = "comment"
-
+    __table_args__ = (
+        # this can be db.PrimaryKeyConstraint if you want it to be a primary key
+        UniqueConstraint('publish_date', 'author_id',
+                         'post_id', name='_comment_pub_post_uc'),
+    )
     id = Column(Integer, primary_key=True)
     content = Column('content', Text())
     publish_date = Column('publish_date', DateTime)
