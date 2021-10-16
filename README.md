@@ -88,3 +88,8 @@ Contribution
 ------------
 
 This project was developed for educational purposes. However, PRs are welcome to improve the project.
+
+Disclaimer
+----------
+
+This project can only be used for educational purposes. Using this software against target systems without prior permission is illegal, and any damages from misuse of this software will not be the responsibility of the author.
